@@ -1,1 +1,110 @@
-% Ny fil
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+
+
+\usepackage{enumerate}
+\usepackage{amsmath} % Tillater avansert formatering av matte.
+\usepackage{amsfonts} % Tillater avanserte teikn, som R for reelle tall.
+\usepackage{graphicx} % Tillater mer avansert formatering av grafikk.
+\usepackage{geometry} % Tillater enklere formatering av sidevisning.
+\usepackage{physics}
+
+\setlength\parindent{0pt}
+
+\title{Project 1}
+\author{Johanne Mehren, Stine Sagen and Marit Kollstuen}
+
+
+\begin{document}
+
+
+\begin{abstract}
+We present our Ferrari algorithm for solving linear equations. Our best algorithm runs as $4n$ FLOPS with $n$ the dimensionality of the matrix.
+\end{abstract}
+
+
+\maketitle
+
+\section{Introduction}
+
+\section{Theory, algorithms and methods}
+
+\section{Project 1 a)}
+
+We are attempting to solve the equation: 
+
+\begin{align*}
+	-u''(x) & = f(x), x \in (0, 1), u(0) = u(1) = 0
+\end{align*}
+
+which can be approximated as:
+
+\begin{equation}
+	v_i" \approx -\frac{v_{i-1}- 2v_i + v_{i+1}}{h^2}
+\end{equation}
+
+Assumed $n= 4$, it can be shown that this can be represented as a Toepliz-matrix by setting: 
+
+\[
+\begin{bmatrix}
+	v
+\end{bmatrix}
+=
+\begin{bmatrix}
+	 v_1 & v_2 & v_3 & v_4
+\end{bmatrix}
+\]
+
+For which 
+
+\[
+\begin{bmatrix}
+	v_1" \\  v_2" \\ v_3" \\ v_4"
+\end{bmatrix}
+	\approx -\frac{1}{h^2}
+\begin{bmatrix}
+	-(v_{0} -2v_1 +v_2) \\
+	-(v_1 -2v_2 +v_3) \\
+	-(v_{2} -2v_3 +v_4) \\
+	-(v_{3} -2v_4 +v_5) 
+\end{bmatrix}
+\]
+
+The boundary conditions are set to $v_0 = v_{n+1} = 0$, so the expression becomes: 
+
+\[
+\begin{bmatrix}
+	2 & -1 & 0 & 0 \\
+	-1 & 2 & -1 & 0 \\
+	0 & -1 & 2 & -1 \\
+	0 & 0 & -1 & 2
+\end{bmatrix}
+\begin{bmatrix}
+	v_1 \\  v_2 \\ v_3 \\ v_4
+\end{bmatrix}
+	= -h^2
+\begin{bmatrix}
+	f_1 \\
+	f_2 \\
+	f_3 \\
+	f_4
+\end{bmatrix}
+\]
+
+In which $f_i$ is known. 
+
+\section{Project 1 b)}
+
+\section{Project 1 c)}
+
+\section{Project 1 d)}
+
+\section{Project 1 e)}
+
+
+\section{Conclusion}
+
+\section{References}
+
+
+\end{document}
