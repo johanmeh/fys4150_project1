@@ -8,6 +8,7 @@
 \usepackage{graphicx} % Tillater mer avansert formatering av grafikk.
 \usepackage{geometry} % Tillater enklere formatering av sidevisning.
 \usepackage{physics}
+\usepackage{amssymb}
 \setlength\parindent{0pt}
 
 \title{Project 1}
@@ -28,6 +29,67 @@ We present our Ferrari algorithm for solving linear equations. Our best algorith
 The main goal of project 1 is to understand the concept of dynamic memory allocation, a memory handling frequently used in programs such as C++ and Fortran. In C++ you have three ways of managing memory; statically, locally or dynamically. By using dynamic memory allocation, we are reserving space for saving data and are able to manage the lifetime of allocated memory. 
 
 \section{Theory, algorithms and methods}
+\subsection{Exact solution}
+The one-dimensional Poisson equation \begin{equation} -u''(x) = f(x) \end{equation} does have an exact (analytical) solution of the form: \begin{equation} u(x) = 1 - (1-e^{-10})x - e^{-10x} \end{equation} when assuming the source term on the right hand side of the Poisson equation is \begin{equation} f(x) = 100e^{-10x}. \end{equation} Substituting the above solution into our differential equation, we can then verify that this turns out to be correct. 
+
+\begin{align*}
+u(x)& = 1 - (1-e^{-10})x - e^{-10x}  \\
+u'(x)& = -1 + e^{-10} + 10e^{-10x} \\
+u''(x)& = -100e^{-10x}  \\
+-(-100e^{-10x})& = 100e^{-10x} \\
+\therefore \\
+100e^{-10x}& = 100e^{-10x}
+\end{align*}
+
+As expected, $u(x) = 1 - (1-e^{-10})x - e^{-10x}$ is an exact solution of $-u''(x) = f(x)$ .\\
+
+Our differential equation conserns a boundary value problem which means our solution also needs to satisfy the given boundary conditions. 
+
+Checking the behavior of the exact solution at its bondary points 0 and 1: 
+
+\begin{align*}
+u(0)& = 1-(1-e^{-10})\cdot 0 -e^{-10\cdot 0} = 0 \\
+u(1)& = 1-(1-e^{-10})\cdot 1 -e^{-10\cdot 1} = 0 \\
+\end{align*}
+
+$u(x) = 1 - (1-e^{-10})x - e^{-10x}$ is indeed a solution of our boundary value problem. 
+\\\\
+In our project we want to compare this exact solution with the numerical solution we obtain when the boundary value problem takes a discretized form. 
+
+\subsection{Finite difference method}
+
+We want to solve the Poisson equation numerically and this can be achived by something we call finite-difference methods. Finite-difference methods are about replacing the derivatives appearing in the differential equation by finite difference approximations at a given set of discrete points in space and/or time. E.g when this method is applied to the second order derivative in the poisson equation, we obtain a dicretized approximation for u in the x-direction because its only depended on the x variable. In deriving these finite difference approximations, Taylor series expansion might be very useful.
+
+\subsubsection{Taylor series expansion}
+
+We might use Taylor series expansion in order to derive a suitable finite difference approximation for the differential equation in the process for obtaining a numerical solution. 
+\\
+Assuming our function u(x) is higher order differensible we can preform a Taylor expansion forward and backward in space:
+\begin{align*}
+u(x+h)& = u(x) + hu' + \frac{h^2u''}{2!}  + \frac{h^3u'''}{3!} + o(h^4) \\ 
+u(x-h)& = u(x) - hu' +  \frac{h^2u''}{2!} -\frac{h^3u'''}{3!} + o(h^4)
+\intertext{To obtain finite difference approximation for the second order derivative we then sum the two equations:}
+u(x+h) + u(x-h)& = 2u(x) + \frac{2h^2u''}{2!} + o(h^4) \\
+\intertext{In the end we solve for  $u'' $ and get:}
+u'&' = \frac{u(x+h) + u(x-h) -2u(x)}{h^2} + o(h^2) \\
+\end{align*}
+
+\subsubsection{Discretization of the bondary value problem}
+
+As already mentioned the concept of discretizing is about dividing the domain into a finite set of discrete points. We now the discretize $u$ as $v_i$ with grid points $x_i =  ih$  in the range from $x_0= 0$ to $x_{n+1}=1$. The grid spacing is defined as $h = \frac{x_{n+1}-x_0}{n+1} = \frac{1-0}{n+1} = \frac{1}{n+1}$. The boundary conditions are $v_0 = v_{n+1} = 0$. Our approximated finite difference approximation for the poisson equation is now:
+
+\begin{equation} 
+-\frac{v_{i+1} + v_{i-1} -2v_i}{h^2} 
+\end{equation}
+
+
+
+\subsection{A general algorithm for solving the tridiagonal matrix}
+\subsection{Specialized algorithm for solving the tridiagonal matrix}
+\subsection{Relative error}
+\subsection{LU-decomposition}
+
+
 
 \section{Project 1 a)}
 
