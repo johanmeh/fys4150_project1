@@ -169,31 +169,31 @@ if __name__ == "__main__":
     
     
     
-#    for n in [10, 100, 1000, 10**4]: # Don't try LU-decomposition with higher n than this!  
-#        v_gauss_ge = gauss_elim_general(-1, 2, -1, n)
-#        v_gauss_sp = gauss_elim_special(-1, 2, n) 
-#        A = make_matrix(n, -1, 2, -1)
-#        v_lu, f_vec = lu_dec(A, n)
-#        plot_stuff(v_gauss_sp, v_lu, n)
+    for n in [10, 100, 1000, 10**4]: # Don't try LU-decomposition with higher n than this!  
+        v_gauss_ge = gauss_elim_general(-1, 2, -1, n)
+        v_gauss_sp = gauss_elim_special(-1, 2, n) 
+        A = make_matrix(n, -1, 2, -1)
+        v_lu, f_vec = lu_dec(A, n)
+        plot_stuff(v_gauss_sp, v_lu, n)
     
 
-    sizes = [10**5, 10**6, 10**7] # sizes of matrices   
+    sizes = [10, 100, 1000, 10**4, 10**5, 10**6, 10**7] # sizes of matrices   
     h = np.zeros(len(sizes))
     max_e = np.zeros(len(sizes))
     for n in sizes:
         i = sizes.index(n)
         h[i] = 1/(n+1)
-        v_gauss_sp = gauss_elim_general(-1, 2,-1, n) 
+        v_gauss_sp = gauss_elim_general(-1, 2, n) 
         epsilon, max_e[i] = relative_error(v_gauss_sp, n)
     
 
 
-#    plt.figure()
-#    plt.semilogx(h, max_e)
-#    plt.xlabel('Stepsize, h', fontsize = 13)
-#    plt.ylabel('Max relative error', fontsize = 13)
-#    plt.grid()
-#    plt.savefig('relative_error.pdf')
+    plt.figure()
+    plt.semilogx(h, max_e)
+    plt.xlabel('Stepsize, h', fontsize = 13)
+    plt.ylabel('Max relative error', fontsize = 13)
+    plt.grid()
+    plt.savefig('relative_error.pdf')
     
  
     
