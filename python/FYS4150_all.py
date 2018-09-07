@@ -183,7 +183,7 @@ if __name__ == "__main__":
     for n in sizes:
         i = sizes.index(n)
         h[i] = 1/(n+1)
-        v_gauss_sp = gauss_elim_general(-1, 2, n) 
+        v_gauss_sp = gauss_elim_special(-1, 2, n) 
         epsilon, max_e[i] = relative_error(v_gauss_sp, n)
     
 
