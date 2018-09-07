@@ -161,6 +161,77 @@ In which $f_i$ is known.
 
 \section{Project 1 b)}
 
+\begin{figure}[h]
+    \centering
+    \includegraphics[width =12cm]{python/size_10.pdf}
+    \caption{Size 10}
+    \label{fig:1}
+\end{figure}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width =12cm]{python/size_100.pdf}
+    \caption{Size 100}
+    \label{fig:2}
+\end{figure}
+
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width =12cm]{python/size_1000.pdf}
+    \caption{Size 1000}
+    \label{fig:3}
+\end{figure}
+
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width =12cm]{python/size_10000.pdf}
+    \caption{Size 10000}
+    \label{fig:4}
+\end{figure}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width =12cm]{python/relative_error.pdf}
+    \caption{Relative error}
+    \label{fig:re}
+\end{figure}
+
+\begin{table}[]
+\begin{tabular}{llll}
+           & \multicolumn{3}{c}{\textbf{Time (s):}}                                                                  \\ \hline
+           & \textbf{Gaussian elimination (g.a.):} & \textbf{Gaussian elimination (s.a.):} & \textbf{LU-decomposition:} \\ \hline
+n = $10$   & $4.816e-05$                              & $4.196e-05$                              & $0.0001301$       \\
+n = $10^2$  & $0.0003078$                              & $0.0002770$                              & $0.0002670$       \\
+n = $10^3$ & $0.003332$                               & $0.003214$                               & $0.02403$         \\
+n = $10^4$ & $0.03234$                                & $0.03215$                                & $14.26$           \\
+n = $10^5$ & $0.3629$                                 & $0.3458$                                 & N/A               \\
+n = $10^6$ & $3.109$                                  & $3.136$                                  & N/A               \\
+n = $10^7$ & $32.79$                                  & $32.20$                                  & N/A              
+\end{tabular}
+\label{tab:1}
+\caption{CPU-time for the different algorithms (g.a. = general algorithm, s.a. = special algorithm)}
+\end{table}
+
+\begin{table}[]
+\centering
+\begin{tabular}{ll}
+\multicolumn{2}{c}{\textbf{Max. relative error, $\epsilon_{max}$:}} \\ \hline
+n = $10$                                  & $1.1797$                                \\
+n = $10^2$                                & $3.08804$                               \\
+n = $10^3$                                & $5.08005$                               \\
+n = $10^4$                                & $7.07936$                               \\
+n = $10^5$                                & $9.0049$                                \\
+n = $10^6$                                & $6.77137$                               \\
+n = $10^7$                                & $12.8336$                              
+\end{tabular}
+\label{tab:2}
+\caption{Relative error for the special algorithm using Equation \ref{eq:re}}
+\end{table}
+
+
+
 \section{Project 1 c)}
 In this task we implement matrix 
 
