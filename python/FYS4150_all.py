@@ -158,9 +158,10 @@ def plot_stuff(v, v_lu, n):
     plt.plot(x, u_exact, color='blue', label = 'u - analytic', Linestyle = ':')
     plt.plot(x, v, color='green', label = 'v - numeric, n = {}'.format(n), Linestyle ='--')
     plt.plot(x[1:-1], v_lu, color='red', label = 'v - LU-decomposition, n = {}'.format(n), Linestyle ='-.')
-    plt.legend(fontsize = 17)
-    plt.xlabel('x', fontsize = 17)
-    plt.ylabel('u(x)', fontsize = 17)
+    plt.legend(fontsize = 10)
+    plt.xlabel('x', fontsize = 13)
+    plt.ylabel('u(x)', fontsize = 13)
+    plt.savefig('size_{}.pdf'.format(n))
     
 
 
@@ -176,7 +177,7 @@ if __name__ == "__main__":
         plot_stuff(v_gauss_sp, v_lu, n)
     
 
-    sizes = [10, 100, 1000, 10**4, 10**5]#, 10**6, 10**7] # sizes of matrices   
+    sizes = [10, 100, 1000, 10**4, 10**5, 10**6, 10**7] # sizes of matrices   
     h = np.zeros(len(sizes))
     max_e = np.zeros(len(sizes))
     for n in sizes:
@@ -189,8 +190,19 @@ if __name__ == "__main__":
 
     plt.figure()
     plt.semilogx(h, max_e)
-    plt.xlabel('Stepsize, h', fontsize = 17)
-    plt.ylabel('Max relative error', fontsize = 17)
+    plt.xlabel('Stepsize, h', fontsize = 13)
+    plt.ylabel('Max relative error', fontsize = 13)
+    plt.grid()
+    plt.savefig('relative_error.pdf')
+    
+ 
+    
+
+
+
+
+
+
     
  
     
