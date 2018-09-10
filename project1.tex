@@ -110,65 +110,6 @@ Our approximated finite difference approximation for equation \eqref{eq1} is now
 with the boundary conditions: $v_0 = v_{n+1} = 0$ and $i = 1,...,n$.  \\
 By using algebraic methods, the equation \eqref{eq7} must first be rewritten into a set of linear equations which can be done as follows: 
 
-\subsection{A general algorithm for solving the tridiagonal matrix}
-To obtain a numerical solution to the second order derivative of $u(x)$, the method of gaussian ellimination is used to solve the set of linear equations given by: . 
-Gaussian ellimination is based on two stages, namely forward substitution and a backward substitution. The first equation is used to eliminate the first uknown vector element $v1$ from the remaining n-1 equations. The second equation (which is changed) is used to eliminate $v2$ from the remaining n-2 equations and so on. This stage is the forward substitution. In the backward substitution stage, the equations are solved recursively starting from $v_n$ up to first uknown vector element $v_1$. \\ We are in our case dealing with a tridiagonal matrix where all the elements are zero except the diagonal and the elements just above and below this. Our function for the algorithm takes four parameters: a (below diagonal element), b (diagonal element), c (upper diagonal element) and n which is the amount grid points we want to test for. In addition, the solution vector \textbf{v} is stored in \textbf{v{\_}vec}, the source term as $\textbf{f\textunderscore{vec}} = h^2f(x)$ and \textbf{b} as \textbf{b{\_}vec}.
-A piece of the generalized algorithm (assuming different values of a,b and c) is given here: 
-\\\\
-Forward substitution:\\
-$i=0:n-2$
-\begin{align*}
-b\textunderscore{vec}[i+1] & \leftarrow b\textunderscore{vec}[i+1]  - \frac{a \cdot c}{b\textunderscore{vec}[i]}     (\sim update)\\
-f\textunderscore{vec}[i+2] &\leftarrow f\textunderscore{vec}[i+2]  - \frac{a \cdot f\textunderscore{vec}[i+1]}{b\textunderscore{vec}[i]}      (\sim update)\\
-\end{align*}
-Backward substitution: \\
-$i = n:1 $
-\begin{align*}
-f\textunderscore{vec}[i-1] & \leftarrow f\textunderscore{vec}[i-1] - \frac{c \cdot f\textunderscore{vec}[i]}{b\textunderscore{vec}[i-1]}      (\sim update)\\
-\end{align*}
-Solution vector:\\
-$i =1:n$
-\begin{align*}
-v\textunderscore{vec}[i] & = \frac{f\textunderscore{vec}[i]}{b\textunderscore{vec}[i-1]}
-\end{align*}
-
-\subsection{Specialized algorithm for solving the tridiagonal matrix}
-For the special case let $a = -1$, $b = 2$ and $c = -1$ be the values of the respective elements in the tridiagonalmatrix given in (). This function takes the parameters a,b and n. The specialized algorithm can be intepreted as follows: \\
-Forward substitution:\\
-$i=0:n-2$
-\begin{align*}
-b\textunderscore{vec}[i+1] & \leftarrow b\textunderscore{vec}[i+1]  - \frac{a^2}{b\textunderscore{vec}[i]}     (\sim update)\\
-f\textunderscore{vec}[i+2] &\leftarrow f\textunderscore{vec}[i+2]  - \frac{a \cdot f\textunderscore{vec}[i+1]}{b\textunderscore{vec}[i]}      (\sim update)\\
-\end{align*}
-Backward substitution: \\
-$i = n:1 $
-\begin{align*}
-f\textunderscore{vec}[i-1] & \leftarrow f\textunderscore{vec}[i-1] - \frac{a \cdot f\textunderscore{vec}[i]}{b\textunderscore{vec}[i-1]}      (\sim update)\\
-\end{align*}
-Solution vector:\\
-$i =1:n$
-\begin{align*}
-v\textunderscore{vec}[i] & = \frac{f\textunderscore{vec}[i]}{b\textunderscore{vec}[i-1]}
-\end{align*}
-
-\subsection{Relative error}
-The relative error between the analytical and the numerical solution can be defined as (in term of the logarithm with base of 10):
-\begin{equation}
-\epsilon_{i} = log_{10}\bigg(\abs{\frac{v_i-u_i}{u_i}}\bigg)
-\end{equation}
-Its of great importance to take the error into account when comparing the analytical and the numerical solution. 
-
-\subsection{LU Decomposition}
-The concept of gaussian ellimination gives rise to another often used method called LU decomposition method. Using this method, the matrix $\textbf{A}$ can be decomposed into the product of two matrices L and U, where L only has elements below the diagonal and U has elements  both at diagonal and the upper diagonal.
-
-\section{Results}
-
-% CPU time 
-In  table \ref{tab:1}, the different CPU times for the developed algorithms in addition to the LU-decomposition are shown for different choices of grid points n. When n increaces, the computational time slows down. Clearly, the LU-decomposition is the slowest algorithm. When n is equal to $10^4$ ($n>10^4$ in LU method does not work) it uses approximately 14.26 seconds compared to the general and special one which use 0.03234 and 0.03215 seconds for performing the same calculations. There is not a huge difference between the general and special algorithm in the computation time, nevertheless, the general uses sligtly longer time compared to the other. 
-
-
-\section{Project 1 a)}
-
 We are attempting to solve the equation: 
 
 \begin{align*}
@@ -231,7 +172,64 @@ The boundary conditions are set to $v_0 = v_{n+1} = 0$, so the expression become
 
 In which $f_i$ is known. 
 
-\section{Project 1 b)}
+
+
+\subsection{A general algorithm for solving the tridiagonal matrix}
+To obtain a numerical solution to the second order derivative of $u(x)$, the method of gaussian ellimination is used to solve the set of linear equations given by: . 
+Gaussian ellimination is based on two stages, namely forward substitution and a backward substitution. The first equation is used to eliminate the first uknown vector element $v1$ from the remaining n-1 equations. The second equation (which is changed) is used to eliminate $v2$ from the remaining n-2 equations and so on. This stage is the forward substitution. In the backward substitution stage, the equations are solved recursively starting from $v_n$ up to first uknown vector element $v_1$. \\ We are in our case dealing with a tridiagonal matrix where all the elements are zero except the diagonal and the elements just above and below this. Our function for the algorithm takes four parameters: a (below diagonal element), b (diagonal element), c (upper diagonal element) and n which is the amount grid points we want to test for. In addition, the solution vector \textbf{v} is stored in \textbf{v{\_}vec}, the source term as $\textbf{f\textunderscore{vec}} = h^2f(x)$ and \textbf{b} as \textbf{b{\_}vec}.
+A piece of the generalized algorithm (assuming different values of a,b and c) is given here: 
+\\\\
+Forward substitution:\\
+$i=0:n-2$
+\begin{align*}
+b\textunderscore{vec}[i+1] & \leftarrow b\textunderscore{vec}[i+1]  - \frac{a \cdot c}{b\textunderscore{vec}[i]}     (\sim update)\\
+f\textunderscore{vec}[i+2] &\leftarrow f\textunderscore{vec}[i+2]  - \frac{a \cdot f\textunderscore{vec}[i+1]}{b\textunderscore{vec}[i]}      (\sim update)\\
+\end{align*}
+Backward substitution: \\
+$i = n:1 $
+\begin{align*}
+f\textunderscore{vec}[i-1] & \leftarrow f\textunderscore{vec}[i-1] - \frac{c \cdot f\textunderscore{vec}[i]}{b\textunderscore{vec}[i-1]}      (\sim update)\\
+\end{align*}
+Solution vector:\\
+$i =1:n$
+\begin{align*}
+v\textunderscore{vec}[i] & = \frac{f\textunderscore{vec}[i]}{b\textunderscore{vec}[i-1]}
+\end{align*}
+
+\subsection{Specialized algorithm for solving the tridiagonal matrix}
+For the special case let $a = -1$, $b = 2$ and $c = -1$ be the values of the respective elements in the tridiagonalmatrix given in (). This function takes the parameters a,b and n. The specialized algorithm can be intepreted as follows: \\
+Forward substitution:\\
+$i=0:n-2$
+\begin{align*}
+b\textunderscore{vec}[i+1] & \leftarrow b\textunderscore{vec}[i+1]  - \frac{a^2}{b\textunderscore{vec}[i]}     (\sim update)\\
+f\textunderscore{vec}[i+2] &\leftarrow f\textunderscore{vec}[i+2]  - \frac{a \cdot f\textunderscore{vec}[i+1]}{b\textunderscore{vec}[i]}      (\sim update)\\
+\end{align*}
+Backward substitution: \\
+$i = n:1 $
+\begin{align*}
+f\textunderscore{vec}[i-1] & \leftarrow f\textunderscore{vec}[i-1] - \frac{a \cdot f\textunderscore{vec}[i]}{b\textunderscore{vec}[i-1]}      (\sim update)\\
+\end{align*}
+Solution vector:\\
+$i =1:n$
+\begin{align*}
+v\textunderscore{vec}[i] & = \frac{f\textunderscore{vec}[i]}{b\textunderscore{vec}[i-1]}
+\end{align*}
+
+\subsection{Relative error}
+The relative error between the analytical and the numerical solution can be defined as (in term of the logarithm with base of 10):
+\begin{equation}
+\epsilon_{i} = log_{10}\bigg(\abs{\frac{v_i-u_i}{u_i}}\bigg)
+\end{equation}
+Its of great importance to take the error into account when comparing the analytical and the numerical solution. 
+
+\subsection{LU Decomposition}
+The concept of gaussian ellimination gives rise to another often used method called LU decomposition method. Using this method, the matrix $\textbf{A}$ can be decomposed into the product of two matrices L and U, where L only has elements below the diagonal and U has elements  both at diagonal and the upper diagonal.
+
+\section{Results}
+
+% CPU time 
+In  table \ref{tab:1}, the different CPU times for the developed algorithms in addition to the LU-decomposition are shown for different choices of grid points n. When n increaces, the computational time slows down. Clearly, the LU-decomposition is the slowest algorithm. When n is equal to $10^4$ ($n>10^4$ in LU method does not work) it uses approximately 14.26 seconds compared to the general and special one which use 0.03234 and 0.03215 seconds for performing the same calculations. There is not a huge difference between the general and special algorithm in the computation time, nevertheless, the general uses sligtly longer time compared to the other. 
+
 
 \begin{figure}[h]
     \centering
@@ -301,15 +299,6 @@ n = $10^7$                                & $12.8336$
 \label{tab:2}
 \caption{Relative error for the special algorithm using Equation \ref{eq:re}}
 \end{table}
-
-
-
-\section{Project 1 c)}
-In this task we implement matrix 
-
-\section{Project 1 d)}
-
-\section{Project 1 e)}
 
 
 \section{Conclusion}
