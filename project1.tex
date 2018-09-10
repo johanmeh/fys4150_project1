@@ -236,7 +236,17 @@ By analyzing the relative error, we can approximate a minimal step length that d
 as a function of $log_{10}(h)$.
 
 \subsection{LU Decomposition}
-The concept of gaussian ellimination gives rise to another often used method called LU decomposition method. Using this method, the matrix $\textbf{A}$ can be decomposed into the product of two matrices L and U, where L only has elements below the diagonal and U has elements  both at diagonal and the upper diagonal.
+The concept of gaussian ellimination gives rise to another often used method called LU decomposition method. Using this method, the matrix $\textbf{A}$ can be decomposed into the product of two matrices L and U, where L only has elements below the diagonal and U has elements  both at diagonal and the upper diagonal. On matrix form the decomposition of $\textbf{Av} = \textbf{f}$ can be intepreted like:
+\begin{equation} 
+\label{lu}
+ \textbf{Av} = \textbf{LUv} = \textbf{f}
+\end{equation}
+Equation (\ref{lu}) is then computed in two steps:
+\begin{equation}
+\label{lu_dec}
+\textbf{Ly} = \textbf{f},     \quad  \textbf{Uv} = \textbf{y} 
+\end{equation}
+where \textbf{y} is assumed to be another vector of same length as \textbf{v} which is used to calculate the second equation in  (\ref{lu_dec}) and thereby the wanted solution for \textbf{v}.
 
 \section{Results}
 
