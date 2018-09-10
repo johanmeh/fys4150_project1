@@ -236,7 +236,19 @@ By analyzing the relative error, we can approximate a minimal step length that d
 as a function of $log_{10}(h)$.
 
 \subsection{LU Decomposition}
-The concept of gaussian ellimination gives rise to another often used method called LU decomposition method. Using this method, the matrix $\textbf{A}$ can be decomposed into the product of two matrices L and U, where L only has elements below the diagonal and U has elements  both at diagonal and the upper diagonal.
+The concept of gaussian ellimination gives rise to another often used method called LU decomposition method. Using this method, the matrix $\textbf{A}$ can be decomposed into the product of two matrices L and U, where L only has elements below the diagonal and U has elements  both at diagonal and the upper diagonal. \\
+On matrix form the decomposition of $\textbf{Av} = \textbf{f}$ can be intepreted like:
+\begin{equation} 
+\label{lu}
+ \textbf{Av} = \textbf{LUv} = \textbf{f}
+\end{equation}
+Equation (\ref{lu}) is then computed in two steps:
+\begin{equation}
+\label{lu_dec}
+\textbf{Ly} = \textbf{f},     \quad  \textbf{Uv} = \textbf{y} 
+\end{equation}
+where \textbf{y} is assumed to be another vector of same length as \textbf{v} which is used to calculate the second equation in  (\ref{lu_dec}) and thereby the wanted solution for \textbf{v}.
+
 
 \subsection{FLOPS}
 Floating point operations or FLOPS measures the efficiency of the computer performance for floating point operations. \\
@@ -250,7 +262,7 @@ Figure \ref{fig:1} shows how our numerical methods, both the Gaussian eliminatio
 In figure \ref{fig:2} the number of grid points is set to $n=100$, and this gives a very good approximation. Changing the number of grid points to $n=1000$ only changes the start of the LU decomposition. This is because the analytic solution and the Gaussian elimination includes the start and ending point whereas LU decomposition does not. 
 
 % CPU time 
-In  table \ref{tab:1}, the different CPU times for the developed algorithms in addition to the LU-decomposition are shown for different choices of grid points n. When n increaces, the computational time slows down. Clearly, the LU-decomposition is the slowest algorithm. When n is equal to $10^4$ ($n>10^4$ in LU method does not work) it uses approximately 14.26 seconds compared to the general and special one which use 0.03234 and 0.03215 seconds for performing the same calculations. There is not a huge difference between the general and special algorithm in the computation time, nevertheless, the general uses sligtly longer time compared to the other. 
+In  table \ref{tab:1}, the different CPU times for the developed algorithms in addition to the LU-decomposition are shown for different choices of grid points n. When n increaces, the computational time slows down. Clearly, the LU-decomposition is the slowest algorithm. When n is equal to $10^4$ it uses approximately 14.26 seconds compared to the general and special one which use 0.03234 and 0.03215 seconds for performing the same results. There is not a huge difference between the general and special algorithm in the computation time, nevertheless, the general uses sligtly longer time compared to the other.  One can see that the CPU time is missing for the LU decomposition when $n \geqslant 10^4$. As mentioned in the section considering flops, the amount of flops in the LU decompostion goes as $2/3n^3$ and the machine can't handle the size of memory needed when n turns big. 
 
 
 \begin{figure}[h]
