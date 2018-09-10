@@ -7,7 +7,7 @@
 \usepackage{amsfonts} % Tillater avanserte teikn, som R for reelle tall.
 \usepackage{graphicx} % Tillater mer avansert formatering av grafikk.
 \usepackage{geometry} % Tillater enklere formatering av sidevisning.
-\usepackage{physics}
+%\usepackage{physics}
 \usepackage{amssymb}
 \setlength\parindent{0pt}
 
@@ -27,7 +27,7 @@ Use of linear algebra to solve linear equations and compare different methods an
 \maketitle
 
 \section{Introduction}
-The main goal of project 1 is to develop a general algorithm for solving linear equations and implement a spesific matrix to our code. By testing two different ways to solve linear equations, we get a better understanding of how computers handle FLOPS, the relative error and running time. Compairing the exact solution to an approximation, we can see how step size is essential when you solve discretized problems. \\
+The main goal of project 1 is to develop a general algorithm for solving linear equations and implement a specific matrix to our code. We present how the Poisson equation, an equation frequently used in theoretical physics, can be represented as a set of linear equation. The solution is approximated by two different methods; the Gaussian elimination and LU decomposition. We are interested in how the two methods handles FLOPS, CPU time and relative error, and if the solution is a good enough approximation compared to the exact solution.   \\
 The report gives a description of the theory behind the algorithm, a discussion about the results and a conclusion. \\ 
 In our project we have used Python language, which does not require dynamic memory allocation. 
 
@@ -234,7 +234,16 @@ Its of great importance to take the error into account when comparing the analyt
 \subsection{LU Decomposition}
 The concept of gaussian ellimination gives rise to another often used method called LU decomposition method. Using this method, the matrix $\textbf{A}$ can be decomposed into the product of two matrices L and U, where L only has elements below the diagonal and U has elements  both at diagonal and the upper diagonal.
 
+\subsection{FLOPS}
+Floating point operations or FLOPS measures the efficiency of the computer performance for floating point operations. \\
+In both substitutions in the the general algorithm we have three FLOPS per line, and all operations must be done $(n-1)$ times. When we choose the value of $n$ to be large, we can approximate the number of FLOATS to be $9n$. \\
+The LU decomposition has a standard FLOP of $\frac{2}{3}n^{3}$. We would therefore expect the CPU time to be larger for LU decomposition than for Gaussian elimination. 
+
+
 \section{Results}
+% Figurer
+Figure \ref{fig:1} shows how our numerical methods, both the Gaussian elimination and the LU decomposition, matches the exact solution with $n=10$ grid points. The numerical methods follows the line for the analytic solution for small values of $x$. As $x$ increases, the difference between the solutions increases, until it reaches a maximum at $x \epsilon [0.2, 0.3]$. For $x > 0.4$ the difference decreases until they are one line again. This tells us that the number of grid points, which corresponds to the step size $h$, are too few to give a satisfying result when $x \epsilon [0.2, 0.3] $. \\
+In figure \ref{fig:2} the number of grid points is set to $n=100$, and this gives a very good approximation. Changing the number of grid points to $n=1000$ only changes the start of the LU decomposition. This is because the analytic solution and the Gaussian elimination includes the start and ending point whereas LU decomposition does not. 
 
 % CPU time 
 In  table \ref{tab:1}, the different CPU times for the developed algorithms in addition to the LU-decomposition are shown for different choices of grid points n. When n increaces, the computational time slows down. Clearly, the LU-decomposition is the slowest algorithm. When n is equal to $10^4$ ($n>10^4$ in LU method does not work) it uses approximately 14.26 seconds compared to the general and special one which use 0.03234 and 0.03215 seconds for performing the same calculations. There is not a huge difference between the general and special algorithm in the computation time, nevertheless, the general uses sligtly longer time compared to the other. 
@@ -311,6 +320,7 @@ n = $10^7$                                & $12.8336$
 
 
 \section{Conclusion}
+Compairing the numerical methods to the analytic solution, we can see how number of grid points are essential to get a good approximation. The larges deviation from the exact solution occurs when it is non linear. 
 
 \section{References}
 
