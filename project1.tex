@@ -7,7 +7,7 @@
 \usepackage{amsfonts} % Tillater avanserte teikn, som R for reelle tall.
 \usepackage{graphicx} % Tillater mer avansert formatering av grafikk.
 \usepackage{geometry} % Tillater enklere formatering av sidevisning.
-%\usepackage{physics}
+\usepackage{physics}
 \usepackage{amssymb}
 \setlength\parindent{0pt}
 
@@ -225,11 +225,15 @@ v\textunderscore{vec}[i] & = \frac{f\textunderscore{vec}[i]}{b\textunderscore{ve
 \end{align*}
 
 \subsection{Relative error}
-The relative error between the analytical and the numerical solution can be defined as (in term of the logarithm with base of 10):
+
+By analyzing the relative error, we can approximate a minimal step length that does not lead to loss of precision due to subtraction of near-equal numbers. The relative error between the analytical and the numerical solution can be defined as:
+
 \begin{equation}
-\epsilon_{i} = log_{10}\bigg(\abs{\frac{v_i-u_i}{u_i}}\bigg)
+	\epsilon_{i} = log_{10}\bigg(\abs{\frac{v_i-u_i}{u_i}}\bigg)
+	\label{eq:8}
 \end{equation}
-Its of great importance to take the error into account when comparing the analytical and the numerical solution. 
+
+as a function of $log_{10}(h)$.
 
 \subsection{LU Decomposition}
 The concept of gaussian ellimination gives rise to another often used method called LU decomposition method. Using this method, the matrix $\textbf{A}$ can be decomposed into the product of two matrices L and U, where L only has elements below the diagonal and U has elements  both at diagonal and the upper diagonal.
