@@ -225,14 +225,28 @@ v\textunderscore{vec}[i] & = \frac{f\textunderscore{vec}[i]}{b\textunderscore{ve
 \end{align*}
 
 \subsection{Relative error}
-The relative error between the analytical and the numerical solution can be defined as (in term of the logarithm with base of 10):
+
+By analyzing the relative error, we can approximate a minimal step length that does not lead to loss of precision due to subtraction of near-equal numbers. The relative error between the analytical and the numerical solution can be defined as:
+
 \begin{equation}
-\epsilon_{i} = log_{10}\bigg(\abs{\frac{v_i-u_i}{u_i}}\bigg)
+	\epsilon_{i} = log_{10}\bigg(\abs{\frac{v_i-u_i}{u_i}}\bigg)
+	\label{eq:8}
 \end{equation}
-Its of great importance to take the error into account when comparing the analytical and the numerical solution. 
+
+as a function of $log_{10}(h)$.
 
 \subsection{LU Decomposition}
-The concept of gaussian ellimination gives rise to another often used method called LU decomposition method. Using this method, the matrix $\textbf{A}$ can be decomposed into the product of two matrices L and U, where L only has elements below the diagonal and U has elements  both at diagonal and the upper diagonal.
+The concept of gaussian ellimination gives rise to another often used method called LU decomposition method. Using this method, the matrix $\textbf{A}$ can be decomposed into the product of two matrices L and U, where L only has elements below the diagonal and U has elements  both at diagonal and the upper diagonal. On matrix form the decomposition of $\textbf{Av} = \textbf{f}$ can be intepreted like:
+\begin{equation} 
+\label{lu}
+ \textbf{Av} = \textbf{LUv} = \textbf{f}
+\end{equation}
+Equation (\ref{lu}) is then computed in two steps:
+\begin{equation}
+\label{lu_dec}
+\textbf{Ly} = \textbf{f},     \quad  \textbf{Uv} = \textbf{y} 
+\end{equation}
+where \textbf{y} is assumed to be another vector of same length as \textbf{v} which is used to calculate the second equation in  (\ref{lu_dec}) and thereby the wanted solution for \textbf{v}.
 
 \subsection{FLOPS}
 Floating point operations or FLOPS measures the efficiency of the computer performance for floating point operations. \\
@@ -247,6 +261,22 @@ In figure \ref{fig:2} the number of grid points is set to $n=100$, and this give
 
 % CPU time 
 In  table \ref{tab:1}, the different CPU times for the developed algorithms in addition to the LU-decomposition are shown for different choices of grid points n. When n increaces, the computational time slows down. Clearly, the LU-decomposition is the slowest algorithm. When n is equal to $10^4$ ($n>10^4$ in LU method does not work) it uses approximately 14.26 seconds compared to the general and special one which use 0.03234 and 0.03215 seconds for performing the same calculations. There is not a huge difference between the general and special algorithm in the computation time, nevertheless, the general uses sligtly longer time compared to the other. 
+
+\begin{table}[]
+\begin{tabular}{llll}
+           & \multicolumn{3}{c}{\textbf{Time (s):}}                                                                  \\ \hline
+           & \textbf{Gaussian elimination (g.a.):} & \textbf{Gaussian elimination (s.a.):} & \textbf{LU-decomposition:} \\ \hline
+n = $10$   & $4.816e-05$                              & $4.196e-05$                              & $0.0001301$       \\
+n = $10^2$  & $0.0003078$                              & $0.0002770$                              & $0.0002670$       \\
+n = $10^3$ & $0.003332$                               & $0.003214$                               & $0.02403$         \\
+n = $10^4$ & $0.03234$                                & $0.03215$                                & $14.26$           \\
+n = $10^5$ & $0.3629$                                 & $0.3458$                                 & N/A               \\
+n = $10^6$ & $3.109$                                  & $3.136$                                  & N/A               \\
+n = $10^7$ & $32.79$                                  & $32.20$                                  & N/A              
+\end{tabular}
+\label{tab:1}
+\caption{CPU-time for the different algorithms (g.a. = general algorithm, s.a. = special algorithm)}
+\end{table}
 
 
 \begin{figure}[h]
@@ -279,44 +309,31 @@ In  table \ref{tab:1}, the different CPU times for the developed algorithms in a
     \label{fig:4}
 \end{figure}
 
-\begin{figure}[h]
-    \centering
-    \includegraphics[width =12cm]{python/relative_error.pdf}
-    \caption{Relative error}
-    \label{fig:re}
-\end{figure}
-
-\begin{table}[]
-\begin{tabular}{llll}
-           & \multicolumn{3}{c}{\textbf{Time (s):}}                                                                  \\ \hline
-           & \textbf{Gaussian elimination (g.a.):} & \textbf{Gaussian elimination (s.a.):} & \textbf{LU-decomposition:} \\ \hline
-n = $10$   & $4.816e-05$                              & $4.196e-05$                              & $0.0001301$       \\
-n = $10^2$  & $0.0003078$                              & $0.0002770$                              & $0.0002670$       \\
-n = $10^3$ & $0.003332$                               & $0.003214$                               & $0.02403$         \\
-n = $10^4$ & $0.03234$                                & $0.03215$                                & $14.26$           \\
-n = $10^5$ & $0.3629$                                 & $0.3458$                                 & N/A               \\
-n = $10^6$ & $3.109$                                  & $3.136$                                  & N/A               \\
-n = $10^7$ & $32.79$                                  & $32.20$                                  & N/A              
-\end{tabular}
-\label{tab:1}
-\caption{CPU-time for the different algorithms (g.a. = general algorithm, s.a. = special algorithm)}
-\end{table}
+Table \ref{tab:2} contains the maximal (in absolute value) relative error defined by Equation \ref{eq:8}. This shows that the relative error is decreasing for decreasing $h$ (increasing $n$) until $h = 10^{-5}$, at which the relative error is at it's lowest and after which it increases again. The relative error is displayed as a function of the stepsize, $h$, in Figure \ref{fig:re}. This confirms that a smaller stepsize to a certain degree relates to a smaller relative error. Thus a loss of precision can be avoided by making the stepsize smaller. 
 
 \begin{table}[]
 \centering
 \begin{tabular}{ll}
 \multicolumn{2}{c}{\textbf{Max. relative error, $\epsilon_{max}$:}} \\ \hline
-n = $10$                                  & $1.1797$                                \\
-n = $10^2$                                & $3.08804$                               \\
-n = $10^3$                                & $5.08005$                               \\
-n = $10^4$                                & $7.07936$                               \\
-n = $10^5$                                & $9.0049$                                \\
-n = $10^6$                                & $6.77137$                               \\
-n = $10^7$                                & $12.8336$                              
+n = $10$                                  & $-1.1797$                                \\
+n = $10^2$                                & $-3.08804$                               \\
+n = $10^3$                                & $-5.08005$                               \\
+n = $10^4$                                & $-7.07928$                               \\
+n = $10^5$                                & $-8.84298$                                \\
+n = $10^6$                                & $-6.07550$                               \\
+n = $10^7$                                & $-5.52523$                              
 \end{tabular}
 \label{tab:2}
-\caption{Relative error for the special algorithm using Equation \ref{eq:re}}
+\caption{Relative error for the specialized algorithm using Equation \ref{eq:8}}
 \end{table}
+
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width =12cm]{python/relative_error.pdf}
+    \caption{Log-log plot or the relative error of the second derivative of $u(x)$ (Equation \ref{eq2}}
+    \label{fig:re}
+\end{figure}
 
 
 \section{Conclusion}
