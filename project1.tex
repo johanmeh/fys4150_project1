@@ -56,8 +56,11 @@ u''(x)& = -100e^{-10x}  \\
 100e^{-10x}& = 100e^{-10x}
 \end{align*}
 
-As expected, equation \eqref{eq2} is an exact solution of the Poisson equation \eqref{eq1}. \\
-Our differential equation conserns a boundary value problem which means our solution also needs to satisfy the given boundary conditions given by:
+As expected, equation \eqref{eq2} is an exact solution of the Poisson equation \eqref{eq1}. 
+
+\medskip
+
+Our differential equation concernes a boundary value problem which means our solution also needs to satisfy the given boundary conditions given by:
 \begin{equation}\label{eq4}
 u(0) = u(1) = 0
 \end{equation}
@@ -70,71 +73,77 @@ u(1)& = 1-(1-e^{-10})\cdot 1 -e^{-10\cdot 1} = 0 \\
 \end{align*}
 
 Equation \eqref{eq2} is a solution of our boundary value problem.
-\\
-As mentioned in the introduction part, we want to compare this exact solution with the numerical solution we obtain when the boundary value problem takes a discretized form. 
+
+\medskip
+
+As mentioned in the introduction, we want to compare this exact solution with the numerical solution we obtain when the boundary value problem takes a discretized form. 
 
 \subsection{Finite difference method}
 
-We want to solve the Poisson equation \eqref{eq1} numerically. This can be achived by using something we call finite-difference methods. Finite-difference methods are about replacing the derivatives appearing in the differential equation by finite difference approximations at a given set of discrete points in space and/or time. When this method is applied to the second order derivative in the Poisson equation \eqref{eq1}, we obtain a dicretized approximation for u in the x-direction because its only depended on the spacial variable x. \\
+We want to solve the Poisson equation \eqref{eq1} numerically. This can be achived by using something we call finite-difference methods. When using finite-difference methods, we are replacing the derivatives appearing in the differential equation by finite difference approximations at a given set of discrete points in space and/or time. When this method is applied to the second order derivative in the Poisson equation \eqref{eq1}, we obtain a dicretized approximation for u in the x-direction because its only depended on the spacial variable x.  
+
+\medskip
+
 A way to find these finite difference approximations is by using Taylor series expansion on the function $u(x)$. 
 
 \subsubsection{Taylor series expansion}
+
 The derivative of a function u(x) is defined as:
+
 \begin{equation}
 \frac{dfu(x)}{dx} = \lim_{h \to 0} \frac{u(x+h) - u(x)}{h}
 \end{equation}
+
 where h is the step length. Further a Taylor expansion forward and backward in the spacial direction x can be done: 
+
 \begin{align*}
 u(x+h)& = u(x) + hu' + \frac{h^2u''}{2!}  + \frac{h^3u'''}{3!} + O(h^4)\\
 u(x-h)& = u(x) - hu' +  \frac{h^2u''}{2!} -\frac{h^3u'''}{3!} + O(h^4)
 \end{align*}
-where the first equation is expanded forward and the second backward in space. \\
+
+where the first equation is expanded forward and the second backward in space.  
+
+\medskip
+
 To obtain finite difference approximation for the second order derivative we then sum the two equations:
+
 \begin{align*}
 u(x+h) + u(x-h)& = 2u(x) + \frac{2h^2u''}{2!} + O(h^4) 
 \end{align*}
+
 where the h inside of the big O-notation is the truncation error.
 Solving for $u''$ we then end up with the following equation:
+
 \begin{equation}
 u'' = \frac{u(x+h) + u(x-h) -2u(x)}{h^2} + O(h^2)
 \end{equation}
-We see that the truncation error is of second order $(h^2)$, and its a error that arises when truncating the derivatives with Taylor series. Further, this result will now be applied to our spesific boundary value problem. 
+
+We see that the truncation error is of second order $(h^2)$.  This error that arises when truncating the derivatives with Taylor series. Further, this result will now be applied to our spesific boundary value problem. 
 
 \subsubsection{Discretization of the boundary value problem}
 
-As already mentioned the concept of discretizing is about dividing the domain into a finite set of discrete points. We now the discretize $u$ as $v_i$ with grid points $x_i =  ih$  in the range from $x_0= 0$ to $x_{n+1}=1$. The grid spacing is defined as $h = \frac{x_{n+1}-x_0}{n+1} = \frac{1}{n+1}$. 
-Our approximated finite difference approximation for equation \eqref{eq1} is now:
+As mentioned above,  the concept of discretizing is about dividing the domain into a finite set of discrete points. We now the discretize $u$ as $v_i$ with grid points $x_i =  ih$  in the range from $x_0= 0$ to $x_{n+1}=1$. The grid spacing is defined as $h = \frac{x_{n+1}-x_0}{n+1} = \frac{1}{n+1}$.  Our approximated finite difference approximation for equation \eqref{eq1} is now:
+
 \begin{equation}\label{eq7}
 -\frac{v_{i+1} + v_{i-1} -2v_i}{h^2} = f_i
 \end{equation}
-with the boundary conditions: $v_0 = v_{n+1} = 0$ and $i = 1,...,n$.  \\
-By using algebraic methods, the equation \eqref{eq7} must first be rewritten into a set of linear equations which can be done as follows: 
 
-We are attempting to solve the equation: 
+with the boundary conditions: $v_0 = v_{n+1} = 0$ and $i = 1,...,n$.  
 
-\begin{align*}
-	-u''(x) & = f(x), x \in (0, 1), u(0) = u(1) = 0
-\end{align*}
+\medskip
 
-which can be approximated as:
 
-\begin{equation}
-	v_i" \approx -\frac{v_{i-1}- 2v_i + v_{i+1}}{h^2}
-\end{equation}
-
-Assumed $n= 4$, it can be shown that this can be represented as a Toepliz-matrix by setting: 
+By using algebraic methods, the equation \eqref{eq7} must first be rewritten into a set of linear equations. Assuming $n= 4$, it can be shown that this can be represented as a Toepliz-matrix by setting: 
 
 \[
-\begin{bmatrix}
 	v
-\end{bmatrix}
 =
 \begin{bmatrix}
 	 v_1 & v_2 & v_3 & v_4
 \end{bmatrix}
 \]
 
-For which 
+In which 
 
 \[
 \begin{bmatrix}
